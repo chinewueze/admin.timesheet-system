@@ -12,7 +12,13 @@ export const AdminTimesheetView = () => {
                 'Authorization': `Bearer ${accessToken}`
             }
         })
-            .then(response => response.json())
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error(`Failed to fetch data. Status: ${response.status}`);
+                }
+            })
             .then(data => {
                 if (data.status) {
                     setReport(data.data);
