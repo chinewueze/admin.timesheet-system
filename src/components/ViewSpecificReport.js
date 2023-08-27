@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export const SpecificReportView = () => {
     const [loading, setLoading] = useState(true);
@@ -12,7 +14,7 @@ export const SpecificReportView = () => {
     useEffect(() => {
         async function fetchReportData() {
             try {
-                const response = await fetch('https://timesheet-api-main.onrender.com/view/reports/64de52055b94379e6d9d9f7b', {
+                const response = await fetch('https://timesheet-api-main.onrender.com/view/reports/<user_id>', {
                     headers: {
                         'x-api-key': 'a57cca53d2086ab3488b358eebbca2e7',
                     },
@@ -33,9 +35,14 @@ export const SpecificReportView = () => {
         }
         fetchReportData();
     }, []);
+    const navigate = useNavigate()
+    const handleLogout = () => {
+        sessionStorage.removeItem('access_token');
+        navigate('/')
+    }
     return (
         <div>
-             <Helmet>
+            <Helmet>
                 <title> VIEW SPECIFIC REPORTS </title>
                 <link rel="icon" type="image/png" href="./assets/Images/adviewicon.png" />
             </Helmet>
@@ -47,6 +54,12 @@ export const SpecificReportView = () => {
                 <div className="text-center mt-4 text-red-500">{error}</div>
             ) : (
                 <div>
+                    <div className="w-full p-1 h-11 flex justify-end my-4">
+                        <Link to='/view-reports'>
+                            <button className="bg-blue-500 text-white rounded-md p-1 m-1" >GO BACK </button>
+                        </Link>
+                        <button className="bg-blue-500 text-white rounded-md p-1 mr-[3%]" onClick={handleLogout} > LOGOUT </button>
+                    </div>
                     <div className="text-center mt-4">
                         <h2 className='font-extrabold text-2xl font-serif'>User Details</h2>
                         <p><span className='font-semibold'>Email:</span> {userData.email} </p>
