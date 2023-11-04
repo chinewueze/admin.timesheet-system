@@ -78,7 +78,7 @@ export const SignIn = () => {
             });
             if (response.status === 200) {
                 const responseData = await response.json();
-                sessionStorage.setItem('access_token', responseData.accessToken);
+                sessionStorage.setItem('access_token', responseData.access_token);
                 navigate("/view-reports");
             } else {
                 setError(true);
