@@ -79,7 +79,7 @@ export const SignIn = () => {
             if (response.status === 200) {
                 const responseData = await response.json();
                 sessionStorage.setItem('access_token', responseData.access_token);
-                navigate("/view-reports");
+                navigate("/view-users");
             } else {
                 setError(true);
                 setModalMessage("Invalid Username/password⚠️");

@@ -9,7 +9,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<SignIn/>}/> 
-      <Route path="/view-reports" element={< AdminViewAll />}/> 
+      <Route path="/view-users" element={< AdminViewAll />}/> 
       <Route path="/view-specific-report/:userId" element={<SpecificReportView />}/>
       
     </Routes>
