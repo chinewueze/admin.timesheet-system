@@ -57,7 +57,7 @@ export const SpecificReportView = () => {
             ) : (
                 <div>
                     <div className='flex  w-full h-[75px] justify-end items-center bg-[#232f3e]'>
-                        <Link to='/view-reports'>
+                        <Link to='/view-users'>
                             <button className="bg-gray-500 text-white rounded-md p-1 m-1" >GO BACK </button>
                         </Link>
                         <button className="bg-gray-500 text-white rounded-md p-1 mr-[3%]" onClick={handleLogout} > LOGOUT </button>
