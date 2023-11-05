@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react"
 import { Helmet } from 'react-helmet';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from "react-router-dom";
 export const AdminViewAll = () => {
     const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
     const accessToken = sessionStorage.getItem('access_token')
 
     useEffect(() => {
@@ -22,6 +25,8 @@ export const AdminViewAll = () => {
                 }
             } catch (err) {
                 console.error("Error", err)
+            } finally {
+                setLoading(false);
             }
         }
         displayAll()
@@ -54,18 +59,23 @@ export const AdminViewAll = () => {
                             </th>
                         </tr>
                     </thead>
-
-                    {users.map((report) => {
-                        return (<tbody>
-                            <tr key={report}>
-                                <td className="border-2 border-solid border-black p-3"> {report.user.username}  </td>
-                                <td className="border-2 border-solid border-black p-3"> {report.user.email}  </td>
-                                <button className="bg-blue-400 rounded-md w-28 h-9 ml-3 mt-3" onClick={() => navigate(`/view-specific-report/${report.user.id}`)}>
-                                    VIEW REPORT
-                                </button>
-                            </tr>
-                        </tbody>)
-                    })}
+                    {loading ? (
+                        <div className="text-center mt-11">
+                            <FontAwesomeIcon icon={faSpinner} spin /> Loading...
+                        </div>
+                    ) : (
+                        users.map((report) => {
+                            return (<tbody>
+                                <tr key={report}>
+                                    <td className="border-2 border-solid border-black p-3"> {report.user.username}  </td>
+                                    <td className="border-2 border-solid border-black p-3"> {report.user.email}  </td>
+                                    <button className="bg-blue-400 rounded-md w-28 h-9 ml-3 mt-3" onClick={() => navigate(`/view-specific-report/${report.user.id}`)}>
+                                        VIEW REPORT
+                                    </button>
+                                </tr>
+                            </tbody>)
+                        })
+                    )}
                 </table>
             </div>
         </>

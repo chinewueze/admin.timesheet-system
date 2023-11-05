@@ -2,15 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useNavigate,  useParams, Link  } from "react-router-dom";
-
+import { useNavigate, useParams, Link } from "react-router-dom";
 export const SpecificReportView = () => {
     const [loading, setLoading] = useState(true);
     const [reportData, setReportData] = useState([]);
     const [userData, setUserData] = useState({});
     const [error, setError] = useState(null);
-    const {userId}  = useParams();
-
+    const { userId } = useParams();
     useEffect(() => {
         const accessToken = sessionStorage.getItem('access_token')
         async function fetchReportData() {
@@ -25,7 +23,7 @@ export const SpecificReportView = () => {
                 if (response.status === 200) {
                     const responseData = await response.json();
                     setUserData(responseData.data.user);
-                    setReportData(responseData.data.report);
+                    setReportData(responseData.data.report)
                 } else {
                     alert("Error occured while fetching user's report")
                 }
@@ -69,38 +67,38 @@ export const SpecificReportView = () => {
                         <p><span className='font-semibold'>Username:</span> {userData.username}</p>
                     </div>
                     <div className="sm:overflow-x-scroll lg:overflow-x-hidden">
-                    <table className=' mx-auto'>
-                        <thead>
-                            <th className='border-2 border-solid border-black p-1'> S/N </th>
-                            <th className='border-2 border-solid border-black p-1'> DATE </th>
-                            <th className='border-2 border-solid border-black p-1'> PROJECT </th>
-                            <th className='border-2 border-solid border-black p-1'> TASK </th>
-                            <th className='border-2 border-solid border-black p-1'> STATUS </th>
-                            <th className='border-2 border-solid border-black p-1'> DURATION </th>
-                            <th className='border-2 border-solid border-black p-1'> LINK </th>
-                        </thead>
-                        <tbody>
-                            {Object.keys(reportData).map((dayOfWeek, index) => {
-                                const report = reportData[dayOfWeek];
-                                if (!report) {
-                                    return null;
-                                }
-                                return (
-                                    <tr key={index}>
-                                        <td className="border-2 border-solid border-black p-3 ">{index + 1}</td>
-                                        <td className="border-2 border-solid border-black p-3 "> {new Date(report.date).toDateString()}</td>
-                                        <td className="border-2 border-solid border-black p-3 ">{report.project}</td>
-                                        <td className="border-2 border-solid border-black p-3 ">{report.task}</td>
-                                        <td className="border-2 border-solid border-black p-3 ">{report.status}</td>
-                                        <td className="border-2 border-solid border-black p-3 ">{report.duration}</td>
-                                        <td className="border-2 border-solid border-black p-3 text-blue-500">
-                                            <a href={report.link.startsWith("http") ? report.link : `http://${report.link}`} target="_blank" rel="noopener noreferrer">{report.link}</a>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
+                        <table className=' mx-auto'>
+                            <thead>
+                                <th className='border-2 border-solid border-black p-1'> S/N </th>
+                                <th className='border-2 border-solid border-black p-1'> DATE </th>
+                                <th className='border-2 border-solid border-black p-1'> PROJECT </th>
+                                <th className='border-2 border-solid border-black p-1'> TASK </th>
+                                <th className='border-2 border-solid border-black p-1'> STATUS </th>
+                                <th className='border-2 border-solid border-black p-1'> DURATION </th>
+                                <th className='border-2 border-solid border-black p-1'> LINK </th>
+                            </thead>
+                            <tbody>
+                                { ( Object.keys(reportData).map ((dayOfWeek, index) => {
+                                    const report = reportData[dayOfWeek];
+                                    if (!report) {
+                                        return null;
+                                    }
+                                    return (
+                                        <tr key={index}>
+                                            <td className="border-2 border-solid border-black p-3 ">{index + 1}</td>
+                                            <td className="border-2 border-solid border-black p-3 "> {new Date(report.date).toDateString()}</td>
+                                            <td className="border-2 border-solid border-black p-3 ">{report.project}</td>
+                                            <td className="border-2 border-solid border-black p-3 ">{report.task}</td>
+                                            <td className="border-2 border-solid border-black p-3 ">{report.status}</td>
+                                            <td className="border-2 border-solid border-black p-3 ">{report.duration}</td>
+                                            <td className="border-2 border-solid border-black p-3 text-blue-500">
+                                                <a href={report.link.startsWith("http") ? report.link : `http://${report.link}`} target="_blank" rel="noopener noreferrer">{report.link}</a>
+                                            </td>
+                                        </tr>
+                                    );
+                                }))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             )}
