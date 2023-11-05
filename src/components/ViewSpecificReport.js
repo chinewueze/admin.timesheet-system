@@ -40,6 +40,7 @@ export const SpecificReportView = () => {
     const navigate = useNavigate()
     const handleLogout = () => {
         sessionStorage.removeItem('access_token');
+        sessionStorage.removeItem('user_id');
         navigate('/')
     }
     return (
